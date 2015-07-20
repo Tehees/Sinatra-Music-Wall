@@ -1,4 +1,4 @@
- <h1>Post a Song</h1>
+ <h1>Add a Song</h1>
  <hr/>
 <% if @song.errors.any? %>
   <div>
@@ -10,6 +10,8 @@
     </ul>
   </div>
 <% end %>
+
+
 <form method="post" action="/songs">
    <div>
      <label>Title:</label>
@@ -25,3 +27,4 @@
    </div>
    <div>
      <input type="submit" value="Submit" >
+     
