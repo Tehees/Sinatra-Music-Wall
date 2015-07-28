@@ -1,4 +1,9 @@
- <h1>Add a Song</h1>
+ <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+ <h1>Upload your favourite songs!</h1>
  <hr/>
 <% if @song.errors.any? %>
   <div>
@@ -13,18 +18,23 @@
 
 
 <form method="post" action="/songs">
-   <div>
+   <div align="center">
      <label>Title:</label>
     <input type="text" name="title" value="<%= @song.title%>">
    </div>
-   <div>
-     <label>Author:</label>
+   <div align="center">
+     <label size="12px">Artist:</label>
     <input type="text" name="author" value="<%= @song.author %>">
    </div>
-   <div>
+   <div align="center">
      <label>URL:</label>
     <input type="text" name="url" value="<%= @song.url %>">
    </div>
-   <div>
+   <br>
+
+   <div align="center">
      <input type="submit" value="Submit" >
+     </div>
+     <br><br><br>
+  <div align="center"><a href="/songs">Back to Tracklist</a></div>
      

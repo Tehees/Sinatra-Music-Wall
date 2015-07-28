@@ -1,14 +1,59 @@
+
 <h1><%= @song.title %></h1>
 
 <p>
   Author: <%= @song.author %>
-
-
 </p>
 
-<p>
-  <%= @song.url  %>
-</p>
+<div class="container">
+  <p>
+    <% unless @song.url.nil? %>
+      <% regex = /youtube.com.*(?:\/|v=)([^&$]+)/ %>
+      <% youtube_id = @song.url.match(regex)[1] %>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/<%=youtube_id%>" frameborder="0" allowfullscreen></iframe>
+    <% else %>
+      <%= @song.url %>
+    <% end %>
+  </p>
+</div>
+<form method="post" action="/review">
+   <div align="center">
+     <label>Review:</label>
+    <input type="text" name="review" value="<%= @new_review.review%>">
+    </div>
+    <input type="hidden" name="song_id" value="<%=@song.id%>">
+ <input type="hidden" name="user_id" value="<%= session[:username]%>">
+   </div>
+   <div style="text-align:center"> 
+     <input type="submit" value="Submit" >
+     </div>
+     </form>
+     <div align="center">
+     <%if @reviews.any?%>
+        <%@reviews.each do |review|%>
+        <br>
+        <div align="center">
+        ------------
+        <br> 
+        <small><%=review.created_at.to_s[0..9]%></small>
+        <br>
+        Submitted by: <%=review.username%>
+        <br>
+        Comment:
+        <br>
+        <%=review.review%>
+        <br>
+        <%if session[:username] == review.username%>
+        <form method="post" action="/delete">
+        <input type="hidden" name="review_id" value="<%= review.id%>">
+     <input type="submit" value="Delete" >
+     <%end%>
 
+
+        -----------
+        </div>
+        </div>
+      <%end%>
+    <%end%>
 <hr/>
-<a href="/songs">Back to All Songs</a>
+<a href="/songs">Back to Tracklist</a>

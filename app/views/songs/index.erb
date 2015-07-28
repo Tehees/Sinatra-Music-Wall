@@ -1,18 +1,33 @@
 
+<!-- All the files that are required -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <a href="/songs/new" class="btn"> &nbsp&nbspAdd a song!</a>
 
-  <a href="/songs/new"> <img src="http://images.all-free-download.com/images/graphiclarge/sign_add_98027.jpg" height="45px" width="45px" ></a>
- 
- <h1>Song Dropdown:</h1>
+ <h1>Music Wall:</h1>
+
 <% @song.each do |song| %>
   <div class="song" text-align:centre>
 
-  <h3><a href="/songs/<%= song.id %>"><br><%= song.title %></a> <small>(by: <%= song.author %>) <br><img src="https://our-eu-voices.wikispaces.com/file/view/music%20line.gif/479891338/music%20line.gif" height="20" width="50"></small></h3>
+  <h3><a href="/songs/<%= song.id %>"><br><i><%= song.title %></i></a> <small>(by: <%= song.author %>) <br><img src="https://our-eu-voices.wikispaces.com/file/view/music%20line.gif/479891338/music%20line.gif" height="20" width="50"></small></h3>
     <p>
-    <%= song.updated_at %>
-<br>
-  <a href = "<%= song.url %>"> Listen now!</a>
-    </p>
+    <p><small>submitted: </small><%= song.created_at.to_s[0..9] %></p>
+    <p><%=song.user_id %></p>
+      <% if session[:username] %>
+        <form method="post" action="/like">
+          <input type="hidden" name="song_id" value="<%= song.id %>" >
+          <input type="hidden" name="user_id" value="<%= session[:username]%>">
+          <p><input class="btn btn-success" type="submit" value="Like!" ></p>
+        </form>
+      <% end %>
+      <p><small>Total likes: </small><%= Like.where(song_id: song.id).count%></p>
 
+
+    <p><a href = "<%= song.url %>"> Listen now!</a></p>
+    <p>----------------------------------------------------------------</p>
+    </p>
   </div>
 
 <% end %>
@@ -28,6 +43,8 @@
               <a href="https://twitter.com/bootsnipp"><i id="social" class="fa fa-twitter-square fa-3x social-tw"></i></a>
               <a href="https://plus.google.com/+Bootsnipp-page"><i id="social" class="fa fa-google-plus-square fa-3x social-gp"></i></a>
               <a href="mailto:bootsnipp@gmail.com"><i id="social" class="fa fa-envelope-square fa-3x social-em"></i></a>
+              <br>
+              <a href="/logout">Logout</a>
 </div>
     <hr>
 </div>
